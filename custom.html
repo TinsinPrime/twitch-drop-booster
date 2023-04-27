@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tinsin.Party :: Twitch Drop Chance Booster</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+var myVar;
+let progress = 0;
+//for testing the opening of options
+let date = new Date;
+let stream = "warframe";
+let time = 0;
+
+function checkTime(){
+	now = Math.floor(Date.now()/1000)
+	console.log("Now = " + now, "Setting = " + time, "Difference =",now-time);
+	if (progress == 0 && time != 0){
+		//WarframeInternational
+		if (now >= time){
+			console.log("GO! GO! GO! Open http://twitch.tv/" + stream);
+			const win = window.open("http://twitch.tv/" + stream + "/", "_blank");
+			progress = 1;
+		};
+	};	
+	myVar = setTimeout(checkTime, 2000);
+};
+
+function updateInfo(){
+	stream = document.getElementById("stream").value;
+	time = document.getElementById("time").value;
+
+	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
+	document.getElementById("controls").style.display = "none";
+};
+
+$(document).ready(function(){
+	checkTime();
+});
+</script>
+<style>
+body{
+	background-color: #222222;
+	color: #e3e3e3;
+	text-align: center;
+}
+
+a{
+	color: #777777;
+	text-decoration: none;
+};
+</style>
+</head>
+
+
+
+
+
+
+<body>
+<h1>Hello Tenno</h1>
+<div id="controls">Stream Autolauncher Settings
+<br>
+<br>
+<input id="stream" placeholder="Stream URL"></input><br>
+<input id="time" placeholder="UNIX timestamp"></input>
+<br>
+<input type="button" value="Send" onclick="updateInfo()"></input>
+<br>
+<br>
+</div>
+<div id="setting">Streams need set!</div><br>
+[<a href="https://r.3v.fi/discord-timestamps/">Timestamp Generator</a>]
+</body>
+</html>
