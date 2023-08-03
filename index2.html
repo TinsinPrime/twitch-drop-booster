@@ -7,8 +7,11 @@
 <meta property="og:url" content="https://twitch-drop-booster.onrender.com/index2.html" />
 <meta property="og:image" content="https://twitch-drop-booster.onrender.com/assets/gift.png" />
 <meta property="og:description" content="A tool that automatically launches Twitch streams after a set time. Best used with automatic Drop collectors, such as in BTTV." />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
+
 var myVar;
 let progress = 0;
 //for testing the opening of options
@@ -20,7 +23,6 @@ function checkTime(){
 	now = Math.floor(Date.now()/1000)
 	console.log("Now = " + now, "Setting = " + time, "Difference =",now-time);
 	if (progress == 0 && time != 0){
-		//WarframeInternational
 		if (now >= time){
 			console.log("GO! GO! GO! Open http://twitch.tv/" + stream);
 			const win = window.open("http://twitch.tv/" + stream + "/", "_blank");
@@ -32,13 +34,18 @@ function checkTime(){
 
 function updateInfo(){
 	stream = document.getElementById("stream").value;
-	time = document.getElementById("time").value;
-
+	fp = document.getElementById("time").value;
+		console.log("sighted value is", fp);
+	fp = flatpickr.parseDate(fp, "Y-m-d H:i");
+	console.log("parsed as", fp);
+	fp = Math.floor(fp/1000);
+	time = fp;
 	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
 	document.getElementById("controls").style.display = "none";
 };
 
 $(document).ready(function(){
+	$("#time").flatpickr({enableTime: true, dateFormat: "Y-m-d H:i"});
 	checkTime();
 });
 </script>
@@ -66,14 +73,13 @@ a{
 <div id="controls">Stream Autolauncher Settings
 <br>
 <br>
-<input id="stream" placeholder="Stream URL"></input><br>
-<input id="time" placeholder="UNIX timestamp"></input>
+<input id="stream" placeholder="Stream URL"/><br>
+<input id="time"/>
 <br>
 <input type="button" value="Send" onclick="updateInfo()"></input>
 <br>
 <br>
 </div>
-<div id="setting">Stream needs set!</div><br>
-[<a href="https://hammertime.cyou/">Timestamp Generator</a>]
+<div id="setting">Warning!<br>Time is set in your local time zone.<br>Be sure to adjust accordingly.</div><br>
 </body>
 </html>
