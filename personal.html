@@ -19,10 +19,9 @@ function checkTime(){
 	now = Math.floor(Date.now()/1000)
 	console.log("Now = " + now, "Setting = " + time, "Difference =",now-time);
 	if (progress == 0 && time != 0){
-		//WarframeInternational
 		if (now >= time){
 			console.log("GO! GO! GO! Open http://twitch.tv/" + stream);
-			//const win = window.open("http://twitch.tv/" + stream + "/", "_blank");
+			const win = window.open("http://twitch.tv/" + stream + "/", "_blank");
 			progress = 1;
 		};
 	};	
@@ -32,16 +31,17 @@ function checkTime(){
 function updateInfo(){
 	stream = document.getElementById("stream").value;
 	fp = document.getElementById("time").value;
-	console.log(fp);
-	fp = flatpickr.parseDate(fp);
-	fp = Math.floor(fp.getTime()/1000);
+		console.log("sighted value is", fp);
+	fp = flatpickr.parseDate(fp, "Y-m-d H:i");
+	console.log("parsed as", fp);
+	fp = Math.floor(fp/1000);
 	time = fp;
 	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
 	document.getElementById("controls").style.display = "none";
 };
 
 $(document).ready(function(){
-	$("#time").flatpickr({enableTime: true});
+	$("#time").flatpickr({enableTime: true, dateFormat: "Y-m-d H:i"});
 	checkTime();
 });
 </script>
@@ -77,6 +77,5 @@ a{
 <br>
 </div>
 <div id="setting">Stream needs set!</div><br>
-[<a href="https://www.epochconverter.com/">Timestamp Generator</a>]
 </body>
 </html>
