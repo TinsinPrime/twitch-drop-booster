@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tinsin.Party :: Twitch Drop Chance Booster</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+
+var myVar;
+let progress = 0;
+//for testing the opening of options
+let date = new Date;
+let stream = "warframe";
+let time = 0;
+
+function checkTime(){
+	now = Math.floor(Date.now()/1000)
+	console.log("Now = " + now, "Setting = " + time, "Difference =",now-time);
+	if (progress == 0 && time != 0){
+		//WarframeInternational
+		if (now >= time){
+			console.log("GO! GO! GO! Open http://twitch.tv/" + stream);
+			//const win = window.open("http://twitch.tv/" + stream + "/", "_blank");
+			progress = 1;
+		};
+	};	
+	myVar = setTimeout(checkTime, 2000);
+};
+
+function updateInfo(){
+	stream = document.getElementById("stream").value;
+	fp = document.getElementById("time").value;
+	console.log(fp);
+	fp = flatpickr.parseDate(fp);
+	fp = Math.floor(fp.getTime()/1000);
+	time = fp;
+	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
+	document.getElementById("controls").style.display = "none";
+};
+
+$(document).ready(function(){
+	$("#time").flatpickr({enableTime: true});
+	checkTime();
+});
+</script>
+<style>
+body{
+	background-color: #222222;
+	color: #e3e3e3;
+	text-align: center;
+}
+
+a{
+	color: #777777;
+	text-decoration: none;
+};
+</style>
+</head>
+
+
+
+
+
+
+<body>
+<h1>Autotwitcher</h1>
+<div id="controls">Stream Autolauncher Settings
+<br>
+<br>
+<input id="stream" placeholder="Stream URL"/><br>
+<input id="time"/>
+<br>
+<input type="button" value="Send" onclick="updateInfo()"></input>
+<br>
+<br>
+</div>
+<div id="setting">Stream needs set!</div><br>
+[<a href="https://www.epochconverter.com/">Timestamp Generator</a>]
+</body>
+</html>
