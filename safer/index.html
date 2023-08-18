@@ -17,17 +17,39 @@ var DSTstart = Date.parse(nthWeekdayOfMonth(0,2,DSTstart_month))
 var DSTend_month = new Date(date.getFullYear(),10)
 var DSTend = Date.parse(nthWeekdayOfMonth(0,1,DSTend_month))
 console.log(DSTstart, DSTend);
+let delay = 0;
 
 // window.location.href('edt.html')
 // window.location.href('est.html')
+
+
+// delay parser
+var empty = [""]
+var $_GET = {},
+args = location.search.substr(1).split(/&/);
+for (var i=0; i<args.length; ++i) {
+	var tmp = args[i].split(/=/);
+	if (tmp[0] != "") {
+		$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
+	}
+}
+console.log("GET:",$_GET);
+if ($_GET.hasOwnProperty('delay') == true){
+	delay = $_GET.delay;
+}else{
+	delay = 0;
+};
+
+
+//date-based redirect
 
 unixstamp = Date.parse(date);
 console.log(unixstamp);
 if (unixstamp > DSTstart && unixstamp < DSTend){
 	//console.log("DST active")
-		window.location.href = 'edt.html'
+		window.location.href = 'edt.html?delay=' + delay
 	} else {
-		window.location.href = 'est.html'
+		window.location.href = 'est.html?delay=' + delay
 }
 
 //cannibalized from https://stackoverflow.com/questions/32192982/
@@ -45,6 +67,8 @@ function nthWeekdayOfMonth(weekday, n, date) {
   }
   return idate;
 }
+
+
 </script>
 </head>
 <body>
