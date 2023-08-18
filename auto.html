@@ -42,6 +42,7 @@ function updateInfo(){
 	time = fp;
 	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
 	document.getElementById("controls").style.display = "none";
+	window.location.href = "auto.html?stream=" + stream + "&time=" + time;
 };
 
 $(document).ready(function(){
