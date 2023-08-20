@@ -10,16 +10,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 var myVar;
+var egg;
 let progress = 0;
 //for testing the opening of options
 var date = new Date();
 var over_day = date.getUTCDay();
-let stream1 = "warframe";
-let stream2 = "warframe";
-let dayadj1 = 0;
-let dayadj2 = 0;
-let realhour1 = 500;
-let realhour2 = 500;
 let delay = 0;
 
 function checkTime(){
@@ -45,22 +40,8 @@ function checkTime(){
 			const win = window.open("http://twitch.tv/Warframe/", "_blank");
 			progress = 1;
 		};
-		//community streams
-		if (day == 5 + dayadj1 && hour == time1){
-			let win = window.open("http://twitch.tv/" + stream1 + "/", "_blank");
-			progress = 1;
-		};
-		if (day == 5 + dayadj2 && hour == time2){
-			let win = window.open("http://twitch.tv/" + stream2 + "/", "_blank");
-			progress = 2;
-		};
 	};
 	if (progress == 1){
-		//second community stream, if window remains open
-		if (day == 5 + dayadj2 && hour == time2){
-			let win = window.open("http://twitch.tv/" + stream2 + "/", "_blank");
-			progress = 2;
-		}
 		if (hour == 21 && day == 2){
 			//reset after WarframeInternational 
 			progress = 0;
@@ -75,44 +56,20 @@ function checkTime(){
 		location.reload();
 	}
 
+	//EASTER EGG :)
+	egg = Math.floor(Math.random()*100);
+	//console.log(egg)
+	if (egg == 30){
+		document.getElementById("title").innerHTML = "Hey Kiddo."
+	}else{
+		document.getElementById("title").innerHTML = "Hello Tenno!"
+	};
+
 	myVar = setTimeout(checkTime, 2000);
-};
-
-function updateInfo(){
-	stream1 = document.getElementById("stream1").value;
-	stream2 = document.getElementById("stream2").value;
-
-	time1 = document.getElementById("time1").options[time1.selectedIndex];
-	time2 = document.getElementById("time2").options[time2.selectedIndex];
-
-	let est1 = time1.text;
-	let est2 = time2.text;
-
-	hour1 = time1.value;
-	hour2 = time2.value;
-
-	realhour1 = hour1%24;
-	realhour2 = hour2%24;
-
-	time1 = realhour1
-	time2 = realhour2	
-
-	dayadj1 = Math.floor(hour1/24)
-	dayadj2 = Math.floor(hour2/24)
-
-	//equal at
-
-	console.log(time1,dayadj1+5)
-	console.log(time2,dayadj2+5)
-
-	document.getElementById("setting").innerHTML = "Settings:<br>" + stream1 + " streams at " + est1 + "<br>" + stream2 + " streams at " + est2;
-
-	document.getElementById("controls").style.display = "none";
 };
 
 $(document).ready(function(){
 	checkTime();
-	document.getElementById("controls").style.display = "none";
 
 	var empty = [""]
 	var $_GET = {},
@@ -158,75 +115,12 @@ a{
 
 
 <body>
-<h1>Hello Tenno</h1>
-<div id="controls">Community Stream Settings
-<br>
-<br>
-<input id="stream1" placeholder="Stream One"></input>
-<select id="time1">
-<option value="4">12 AM</option>
-<option value="5">1 AM</option>
-<option value="6">2 AM</option>
-<option value="7">3 AM</option>
-<option value="8">4 AM</option>
-<option value="9">5 AM</option>
-<option value="10">6 AM</option>
-<option value="11">7 AM</option>
-<option value="12">8 AM</option>
-<option value="13">9 AM</option>
-<option value="14">10 AM</option>
-<option value="15">11 AM</option>
-<option value="16">12 PM</option>
-<option value="17">1 PM</option>
-<option value="18">2 PM</option>
-<option value="19">3 PM</option>
-<option value="20">4 PM</option>
-<option value="21">5 PM</option>
-<option value="22">6 PM</option>
-<option value="23">7 PM</option>
-<option value="24">8 PM</option>
-<option value="25">9 PM</option>
-<option value="26">10 PM</option>
-<option value="27">11 PM</option>
-</select>
-<br>
-<input id="stream2" placeholder="Stream Two"></input>
-<select id="time2">
-<option value="4">12 AM</option>
-<option value="5">1 AM</option>
-<option value="6">2 AM</option>
-<option value="7">3 AM</option>
-<option value="8">4 AM</option>
-<option value="9">5 AM</option>
-<option value="10">6 AM</option>
-<option value="11">7 AM</option>
-<option value="12">8 AM</option>
-<option value="13">9 AM</option>
-<option value="14">10 AM</option>
-<option value="15">11 AM</option>
-<option value="16">12 PM</option>
-<option value="17">1 PM</option>
-<option value="18">2 PM</option>
-<option value="19">3 PM</option>
-<option value="20">4 PM</option>
-<option value="21">5 PM</option>
-<option value="22">6 PM</option>
-<option value="23">7 PM</option>
-<option value="24">8 PM</option>
-<option value="25">9 PM</option>
-<option value="26">10 PM</option>
-<option value="27">11 PM</option>
-</select>
-
-<br>
-<input type="button" value="Send" onclick="updateInfo()"></input>
-<br>
+<h1 id="title">Hello Tenno</h1>
 <br>
 </div>
 <div id="setting">Streams need set!</div>
 <br>
-[<a href="https://forums.warframe.com/forum/113-livestreams/">Twitch Drop Forum</a>]<br>
-[<a href="custom.html">General Use Drop Launcher</a>]<br>
+[<a href="custom.html">General Use / Community Drop Launcher</a>]<br>
 </body>
 </body>
 </html>
