@@ -13,6 +13,14 @@
 <script>
 
 var myVar;
+
+// clock cosmetic variables
+var clocktime = 2;
+var doubleclock = 0;
+const clocks = ["&#128347;", "&#128336;", "&#128337;","&#128338;","&#128339;","&#128340;","&#128341;","&#128342;","&#128343;","&#128344;","&#128345;","&#128346;"];
+var currentclock = ""
+var upcoming = ""
+
 let progress = 0;
 //for testing the opening of options
 let date = new Date;
@@ -20,6 +28,15 @@ let stream = "warframe";
 let time = 0;
 
 function checkTime(){
+	//clock cosmetic
+	clocktime++;
+	if (clocktime>=12){
+		clocktime=0;
+	}
+	currentclock = clocks[clocktime];
+	doubleclock = clocks[(clocktime+2)%12]
+
+
 	now = Math.floor(Date.now()/1000)
 	console.log("Now = " + now, "Setting = " + time, "Difference =",now-time);
 	if (progress == 0 && time != 0){
@@ -29,6 +46,11 @@ function checkTime(){
 			progress = 1;
 		};
 	};	
+
+	//clock cosmetic
+	if (document.getElementById("controls").style.display == "none"){
+		document.getElementById("timer").innerHTML = currentclock + "Waiting..." + doubleclock + "<br><br>";
+	};
 	myVar = setTimeout(checkTime, 2000);
 };
 
@@ -42,7 +64,9 @@ function updateInfo(){
 	time = fp;
 	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
 	document.getElementById("controls").style.display = "none";
+	document.getElementById("timer").style.display = "inline";
 	window.location.href = "custom.html?stream=" + stream + "&time=" + time;
+	
 };
 
 $(document).ready(function(){
@@ -79,6 +103,10 @@ a{
 	color: #777777;
 	text-decoration: none;
 };
+
+.forum{
+	text-size:0.25vw;
+}
 </style>
 </head>
 
@@ -99,7 +127,9 @@ a{
 <br>
 <br>
 </div>
-<div id="forum">[<a href="https://forums.warframe.com/forum/113-livestreams/">Warframe Drop Forum</a>]<br></div>
+<div>
 <div id="setting"><div style="font-size:2vw">Warning!</div>Time is set in your local time zone.<br>Be sure to adjust accordingly.</div><br>
+<div id="timer"></div>
+<div id="forum">[<a href="https://forums.warframe.com/forum/113-livestreams/">Warframe Drop Forum</a>]<br></div>
 </body>
 </html>
