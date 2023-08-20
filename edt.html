@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Tinsin.Party :: Twitch Drop Chance Booster</title>
 <meta property="og:title" content="Cephalon Tinsin's Warframe Twitch Drop Chance Booster [EASTERN DAYLIGHT]" />
-<meta property="og:url" content="https://twitch-drop-booster.onrender.com/edt.html" />
+<meta property="og:url" content="https://twitch-drop-booster.onrender.com/safer/edt.html" />
 <meta property="og:image" content="https://twitch-drop-booster.onrender.com/assets/booster.png" />
 <meta property="og:description" content="!!WARNING!! - This page is a redirect used for Eastern Daylight Time. It is not meant for linking! Please go to the main index.html, as it should automatically redirect to the current DST situation. Thank you!" />
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -20,6 +20,7 @@ let dayadj1 = 0;
 let dayadj2 = 0;
 let realhour1 = 500;
 let realhour2 = 500;
+let delay = 0;
 
 function checkTime(){
 	const title = document.getElementById("weekday");
@@ -28,17 +29,18 @@ function checkTime(){
 	const d = new Date();
 	day = d.getUTCDay();
 	const hour = d.getUTCHours();
-	console.log(hour, day);
+	const minute = d.getUTCMinutes();
+	console.log("Current time code:", "D"+day, "H"+hour, "M"+minute);
 	//console.log(weekdays[day], hour);
 	if (progress == 0){
 		//WarframeInternational
-		if (hour == 19 && day == 3){
+		if (hour == 19 && day == 3 && minute >= delay){
 			console.log("Warframe International is streaming.");
 			const win = window.open("http://twitch.tv/WarframeInternational/", "_blank");
 			progress = 1;
 		};
 		//Warframe
-		if (hour == 22 && day == 4){
+		if (hour == 22 && day == 4 && minute >= delay){
 			console.log("Warframe is streaming.");
 			const win = window.open("http://twitch.tv/Warframe/", "_blank");
 			progress = 1;
@@ -110,6 +112,30 @@ function updateInfo(){
 
 $(document).ready(function(){
 	checkTime();
+	document.getElementById("controls").style.display = "none";
+
+	var empty = [""]
+	var $_GET = {},
+    args = location.search.substr(1).split(/&/);
+	for (var i=0; i<args.length; ++i) {
+		var tmp = args[i].split(/=/);
+		if (tmp[0] != "") {
+			$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
+		}
+	}
+	console.log("GET:",$_GET);
+	if ($_GET.hasOwnProperty('delay') == true){
+		delay = $_GET.delay;
+	}else{
+		delay = 0;
+	};
+
+	if (delay > 0){
+			document.getElementById("setting").innerHTML = delay + " minute delay set.";
+	}else{
+			document.getElementById("setting").innerHTML = "No delay set.";
+	};
+
 });
 </script>
 <style>
@@ -200,7 +226,7 @@ a{
 <div id="setting">Streams need set!</div>
 <br>
 [<a href="https://forums.warframe.com/forum/113-livestreams/">Twitch Drop Forum</a>]<br>
-[<a href="index2.html">General Use Drop Launcher</a>]<br>
+[<a href="custom.html">General Use Drop Launcher</a>]<br>
 </body>
 </body>
 </html>

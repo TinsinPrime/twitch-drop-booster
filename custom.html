@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <title>Tinsin.Party :: Twitch Drop Chance Booster</title>
-<meta property="og:title" content="Tinsin's Twitch Drop Chance Booster [LUXURY SUITE]" />
-<meta property="og:url" content="https://twitch-drop-booster.onrender.com/personal.html" />
-<meta property="og:image" content="https://twitch-drop-booster.onrender.com/assets/booster.png" />
-<meta property="og:description" content="This is a tool that automatically launches Twitch streams after a set time. Best used with automatic Drop collectors, such as in BetterTTV. !!WARNING!! - The settings are based on your local time zone. Adjust accordingly." />
+<meta property="og:title" content="Tinsin's Twitch Drop Chance Booster" />
+<meta property="og:url" content="https://twitch-drop-booster.onrender.com/auto.html" />
+<meta property="og:image" content="https://twitch-drop-booster.onrender.com/assets/gift.png" />
+<meta property="og:description" content="A tool that automatically launches Twitch streams after a set time. Best used with automatic Drop collectors, such as in BTTV. Now with autocomplete!" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -42,10 +42,29 @@ function updateInfo(){
 	time = fp;
 	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
 	document.getElementById("controls").style.display = "none";
+	window.location.href = "custom.html?stream=" + stream + "&time=" + time;
 };
 
 $(document).ready(function(){
 	$("#time").flatpickr({enableTime: true, dateFormat: "Y-m-d H:i"});
+// get query arguments
+	var empty = [""]
+	var $_GET = {},
+    args = location.search.substr(1).split(/&/);
+	for (var i=0; i<args.length; ++i) {
+		var tmp = args[i].split(/=/);
+		if (tmp[0] != "") {
+			$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
+		}
+	}
+	console.log($_GET);
+	if(args.length >= 2){
+		console.log("Automatic filling.")
+		stream = $_GET.stream;
+		time = $_GET.time;
+		document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
+		document.getElementById("controls").style.display = "none";
+	}
 	checkTime();
 });
 </script>
