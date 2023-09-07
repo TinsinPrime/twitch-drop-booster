@@ -56,7 +56,10 @@ function checkTime(){
 	if (day == 3 && hour >= 21){
 		upcoming = "Warframe will be streaming Thurdsay at 6 PM ET!";
 	};
-	if (day == 4 && hour >= 23){
+	if (day == 4 && hour < 22){
+		upcoming = "Warframe will be streaming Thurdsay at 6 PM ET!";
+	};
+	if (day == 4 && hour >= 22){
 		upcoming = "Community Streams will happen on Friday! The custom launcher is needed for that.";
 	};
 	if (day == 5 && hour >= 5){
