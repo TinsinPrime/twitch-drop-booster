@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tinsin.Party :: Twitch Drop Chance Booster</title>
+<meta property="og:title" content="Tinsin's Twitch Drop Chance Booster Buffer" />
+<meta property="og:url" content="https://twitch-drop-booster.onrender.com/buffer.html" />
+<meta property="og:image" content="https://twitch-drop-booster.onrender.com/assets/gift.png" />
+<meta property="og:description" content="A tool that automatically launches additional Twitch stream launchers, in case the stream wasn't ready on time! Accepts variables 'stream', 'time', and optionally 'repeats' (defaults to 3)" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+
+$(document).ready(function(){
+	var empty = [""]
+	var stream;
+	var time;
+	repeats = 3;
+	var $_GET = {},
+    args = location.search.substr(1).split(/&/);
+	for (var i=0; i<args.length; ++i) {
+		var tmp = args[i].split(/=/);
+		if (tmp[0] != "") {
+			$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
+		}
+	}
+	console.log($_GET["stream"]);
+	get = $_GET;
+	stream = get["stream"]
+	time = get["time"];
+	basic_url = "https://twitch-drop-booster.onrender.com/custom.html?stream=" + stream + "&time=";
+
+	if ("repeats" in get){
+		repeats = parseInt(get["repeats"]);
+	};
+
+	for (let i = 0; i < repeats; i++){
+		window.open(basic_url + (parseInt(time) + (i * 300)));
+	};
+  //window.location.replace("https://tinsin-contact.carrd.co/");
+});
+</script>
+<style>
+body{
+	background-color: #222222;
+	color: #e3e3e3;
+	text-align: center;
+}
+
+a{
+	color: #777777;
+	text-decoration: none;
+};
+
+.forum{
+	text-size:0.25vw;
+}
+</style>
+</head>
+
+
+
+
+
+
+<body>
+<h1>Autotwitcher Multiplier</h1>
+<div id="controls">Is this thing on...?
+<br>
+<br>
+<br>
+<br>
+</div>
+<div>
+</body>
+</html>
