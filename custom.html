@@ -24,7 +24,7 @@ var upcoming = ""
 let progress = 0;
 //for testing the opening of options
 let date = new Date;
-let stream = "warframe";
+let stream = "";
 let time = 0;
 
 function checkTime(){
@@ -38,7 +38,8 @@ function checkTime(){
 
 
 	now = Math.floor(Date.now()/1000)
-	console.log("Now = " + now, "Setting = " + time, "Difference =",now-time);
+	dist = time-now
+	console.log("Now = " + now, "Setting = " + time, "Difference =", dist);
 	if (progress == 0 && time != 0){
 		if (now >= time){
 			console.log("GO! GO! GO! Open http://twitch.tv/" + stream);
@@ -47,9 +48,30 @@ function checkTime(){
 		};
 	};	
 
-	//clock cosmetic
-	if (document.getElementById("controls").style.display == "none"){
-		document.getElementById("timer").innerHTML = currentclock + "Waiting..." + doubleclock + "<br><br>";
+	if (dist > 0) {
+		//clock cosmetic
+		//calculating distance in time
+		hours = Math.floor(dist/3600);
+		minutes = Math.floor((dist - (hours*3600))/60);
+
+		if (hours == 1){
+			hourterm = "hour";
+		}else{
+			hourterm = "hours";
+		}
+
+		if (minutes == 1){
+			minuteterm = "minute";
+		}else{
+			minuteterm = "minutes";
+		}
+		if (document.getElementById("controls").style.display == "none"){
+			document.getElementById("timer").innerHTML = currentclock + " " + hours + " " + hourterm + ", " + minutes + " " + minuteterm + " remain " + doubleclock + "<br>"+ " <br><br>";
+		};
+	}else{
+		if (stream != ""){
+		document.getElementById("timer").innerHTML = "&#9200; Time's up! &#9200;<br><br>"
+		};
 	};
 	myVar = setTimeout(checkTime, 2000);
 };
@@ -65,7 +87,7 @@ function updateInfo(){
 	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
 	document.getElementById("controls").style.display = "none";
 	document.getElementById("timer").style.display = "inline";
-	window.location.href = "custom.html?stream=" + stream + "&time=" + time;
+	window.location.href = "test.html?stream=" + stream + "&time=" + time;
 	
 };
 
