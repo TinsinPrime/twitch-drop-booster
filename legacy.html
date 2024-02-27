@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tinsin.Party :: Twitch Drop Chance Booster</title>
+<meta property="og:title" content="Cephalon Tinsin's Warframe Twitch Drop Chance Booster" />
+<meta property="og:url" content="https://twitch-drop-booster.onrender.com/safer/index.html" />
+<meta property="og:image" content="https://twitch-drop-booster.onrender.com/assets/booster.png" />
+<meta property="og:description" content="Greetings, Tenno! This is a tool that automatically launches Twitch streams after a set time. Wednesdays and Thursdays should go off automatically, but you'll need to set the community streams on Friday! Best used with automatic Drop collectors, such as in BTTV. (Accepts '?delay=x' for an x-minute delay.)" />
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+//for testing the opening of options
+var date = new Date();
+var over_day = date.getUTCDay();
+var DSTstart_month = new Date(date.getFullYear(),2)
+var DSTstart = Date.parse(nthWeekdayOfMonth(0,2,DSTstart_month))
+var DSTend_month = new Date(date.getFullYear(),10)
+var DSTend = Date.parse(nthWeekdayOfMonth(0,1,DSTend_month))
+console.log(DSTstart, DSTend);
+let delay = 0;
+
+// window.location.href('edt.html')
+// window.location.href('est.html')
+
+
+// delay parser
+var empty = [""]
+var $_GET = {},
+args = location.search.substr(1).split(/&/);
+for (var i=0; i<args.length; ++i) {
+	var tmp = args[i].split(/=/);
+	if (tmp[0] != "") {
+		$_GET[decodeURIComponent(tmp[0])] = decodeURIComponent(tmp.slice(1).join("").replace("+", " "));
+	}
+}
+console.log("GET:",$_GET);
+if ($_GET.hasOwnProperty('delay') == true){
+	delay = $_GET.delay;
+}else{
+	delay = 0;
+};
+
+
+//date-based redirect
+
+unixstamp = Date.parse(date);
+console.log(unixstamp);
+if (unixstamp > DSTstart && unixstamp < DSTend){
+	//console.log("DST active")
+		window.location.href = 'edt.html?delay=' + delay
+	} else {
+		window.location.href = 'est.html?delay=' + delay
+}
+
+//cannibalized from https://stackoverflow.com/questions/32192982/
+//thanks, StackOverflow user Michael Laszlo!
+function nthWeekdayOfMonth(weekday, n, date) {
+  var count = 0,
+      idate = new Date(date.getFullYear(), date.getMonth(), 1);
+  while (true) {
+    if (idate.getDay() === weekday) {
+      if (++count == n) {
+        break;
+      }
+    }
+    idate.setDate(idate.getDate() + 1);
+  }
+  return idate;
+}
+
+
+</script>
+</head>
+<body>
+</body>
+</html>
