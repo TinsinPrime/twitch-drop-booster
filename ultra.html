@@ -53,12 +53,12 @@ function checkTime(){
 			progress = 1;
 			currnet_loop = current_loop + 1;
 		};
-	if (current_loop >= 1 && current_loop < (loops+1)){
-		if (now > time + ((current_loop*interval_minutes)){
-			console.log("GO! GO! GO! Open http://twitch.tv/" + stream + " for round " + current_loop);
-			const win = window.open("http://twitch.tv/" + stream + "/", "_blank");
-			current_loop = current_loop + 1;
-		};
+		if (current_loop >= 1 && current_loop < (loops+1)){
+			if (now > (time + (current_loop*interval_minutes))){
+				console.log("GO! GO! GO! Open http://twitch.tv/" + stream + " for round " + current_loop);
+				const win = window.open("http://twitch.tv/" + stream + "/", "_blank");
+				current_loop = current_loop + 1;
+			};
 	};
 	};	
 
