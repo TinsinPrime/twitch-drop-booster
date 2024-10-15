@@ -6,7 +6,7 @@
 <meta property="og:title" content="Tinsin's Twitch Drop Chance Booster Buffer" />
 <meta property="og:url" content="https://twitch-drop-booster.onrender.com/buffer.html" />
 <meta property="og:image" content="https://twitch-drop-booster.onrender.com/assets/gift.png" />
-<meta property="og:description" content="A tool that automatically launches additional Twitch stream launchers, in case the stream wasn't ready on time! Accepts variables 'stream', 'time', and optionally 'repeats' (defaults to 3)" />
+<meta property="og:description" content="A tool that automatically launches additional Twitch stream launchers, in case the stream wasn't ready on time! Accepts variables 'stream', 'time', and optionally 'repeats' (defaults to 3) and 'delay' (defaults to 5)" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -17,6 +17,7 @@ $(document).ready(function(){
 	var stream;
 	var time;
 	repeats = 3;
+	delay = 5;
 	var $_GET = {},
     args = location.search.substr(1).split(/&/);
 	for (var i=0; i<args.length; ++i) {
@@ -34,14 +35,18 @@ $(document).ready(function(){
 	if ("repeats" in get){
 		repeats = parseInt(get["repeats"]);
 	};
+	
+	if ("delay" in get){
+		delay = parseInt(get["delay"]);
+	};
 
 	for (let i = 0; i < repeats; i++){
-		window.open(basic_url + (parseInt(time) + (i * 300)));
+		window.open(basic_url + (parseInt(time) + (i * delay * 60)));
 	};
   //window.location.replace("https://tinsin-contact.carrd.co/");
-	document.getElementById("controls").innerHTML = "Mission accomplished!<br><br>Stream Target: " + stream + "<br>Initial Timecode: " + time + "<br>Additional Buffer Tabs: " + repeats + "<br><br>Feel free to close this tab.";
+	document.getElementById("controls").innerHTML = "Mission accomplished!<br><br>Stream Target: " + stream + "<br>Initial Timecode: " + time + "<br>Additional Buffer Tabs: " + repeats + "<br>Delay in minutes: " + delay + "<br><br>Feel free to close this tab.";
 	//added to differentiate the launcher-launcher tab from the launchers
-	document.title = "[DEPLETED]";
+	document.title = "[" + stream + " stream buffer casing]";
 	
 });
 </script>
