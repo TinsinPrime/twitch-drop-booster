@@ -30,7 +30,7 @@ $(document).ready(function(){
 	get = $_GET;
 	stream = get["stream"]
 	time = get["time"];
-	basic_url = "https://twitch-drop-booster.onrender.com/custom.html?stream=" + stream + "&time=";
+	basic_url = "https://twitch-drop-booster.onrender.com/?stream=" + stream + "&time=";
 
 	if ("repeats" in get){
 		repeats = parseInt(get["repeats"]);
