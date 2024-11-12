@@ -26,6 +26,12 @@ let progress = 0;
 let date = new Date;
 let stream = "";
 let time = 0;
+let shift = 0;
+
+
+function reroute(shift) {
+	window.location.href = "?stream=" + stream + "&time=" + (parseInt(time) + parseInt(shift));
+}
 
 function checkTime(){
 	//clock cosmetic
@@ -65,15 +71,24 @@ function checkTime(){
 		}else{
 			minuteterm = "minutes";
 		}
+		allterms = hours + " " + hourterm + ", " + minutes + " " + minuteterm 
 		if (document.getElementById("controls").style.display == "none"){
-			document.getElementById("timer").innerHTML = currentclock + " " + hours + " " + hourterm + ", " + minutes + " " + minuteterm + " remain " + doubleclock + "<br>"+ " <br><br>";
+			document.getElementById("timer").innerHTML = currentclock + " " + allterms + " remain " + doubleclock + "<br>"+ " <br><br>";
+			document.title = "[ " + allterms + " ]"
 		};
 	}else{
 		if (stream != ""){
 		document.getElementById("timer").innerHTML = "&#9200; Time's up! &#9200;<br><br>"
+		document.title = "[ " + stream + " launched ]";
 		};
 	};
 	myVar = setTimeout(checkTime, 2000);
+};
+
+function showFinal(){
+	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time + "<br><br>Adjustment Options<br>" + "<a onclick='reroute(-600)'>-10m</a>" + " <a onclick='reroute(-300)'>-5m</a>" + " <a onclick='reroute(-60)'>-1m</a> " + "|" + " <a onclick='reroute(60)'>+1m</a>" + " <a onclick='reroute(300)'>+5m</a>" + " <a onclick='reroute(600)'>+10m</a>";
+	document.getElementById("controls").style.display = "none";
+	document.getElementById("timer").style.display = "inline";
 };
 
 function updateInfo(){
@@ -84,11 +99,8 @@ function updateInfo(){
 	console.log("parsed as", fp);
 	fp = Math.floor(fp/1000);
 	time = fp;
-	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
-	document.getElementById("controls").style.display = "none";
-	document.getElementById("timer").style.display = "inline";
-	window.location.href = "custom.html?stream=" + stream + "&time=" + time;
-	
+	showFinal();
+	window.location.href = "?stream=" + stream + "&time=" + time;
 };
 
 $(document).ready(function(){
@@ -108,7 +120,7 @@ $(document).ready(function(){
 		console.log("Automatic filling.")
 		stream = $_GET.stream;
 		time = $_GET.time;
-		document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time;
+		showFinal();
 		document.getElementById("controls").style.display = "none";
 	}
 	checkTime();
