@@ -85,8 +85,16 @@ function checkTime(){
 	myVar = setTimeout(checkTime, 2000);
 };
 
+function buffer(reps) {
+		for (let i = 0; i < reps; i++){
+			var shift = i*300;
+			window.location.href = "buffer.html?stream=" + stream + "&time=" + time;
+		};
+};
+
+//swapping the settings window for the final readout
 function showFinal(){
-	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time + "<br><br>Adjustment Options<br>" + "<a onclick='reroute(-600)'>-10m</a>" + " <a onclick='reroute(-300)'>-5m</a>" + " <a onclick='reroute(-60)'>-1m</a> " + "|" + " <a onclick='reroute(60)'>+1m</a>" + " <a onclick='reroute(300)'>+5m</a>" + " <a onclick='reroute(600)'>+10m</a>";
+	document.getElementById("setting").innerHTML = "Settings:<br>URL: <a href='http://twitch.tv/" + stream + "'>" + stream + "</a><br>Timestamp: " + time + "<br><br>Adjustment Options<br>" + "<a onclick='reroute(-600)'>-10m</a>" + " <a onclick='reroute(-300)'>-5m</a>" + " <a onclick='reroute(-60)'>-1m</a> " + "<a onclick='buffer(3)'>|</a>" + " <a onclick='reroute(60)'>+1m</a>" + " <a onclick='reroute(300)'>+5m</a>" + " <a onclick='reroute(600)'>+10m</a>";
 	document.getElementById("controls").style.display = "none";
 	document.getElementById("timer").style.display = "inline";
 };
